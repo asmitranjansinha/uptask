@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:uptask/core/constants/app_strings.dart';
+import 'package:uptask/core/theme/app_theme.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const UpTask());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class UpTask extends StatelessWidget {
+  const UpTask({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      title: AppStrings.appTitle,
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.lightTheme, // Applying the theme
     );
   }
 }
