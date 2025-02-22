@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:uptask/features/auth/presentation/pages/login_page.dart';
 import 'package:uptask/features/auth/presentation/pages/register_page.dart';
+import 'package:uptask/features/splash/presentation/pages/splash_page.dart';
 import 'package:uptask/features/task/presentation/pages/task_form_page.dart';
 import 'package:uptask/features/task/presentation/pages/task_list_page.dart';
 
@@ -12,13 +13,13 @@ class AppRouter {
     navigatorKey: _rootNavigatorKey,
     initialLocation: '/',
     routes: [
-      // GoRoute(
-      //   path: '/',
-      //   name: 'splash',
-      //   builder: (context, state) => const SplashPage(),
-      // ),
       GoRoute(
         path: '/',
+        name: 'splash',
+        builder: (context, state) => const SplashPage(),
+      ),
+      GoRoute(
+        path: '/login',
         name: 'login',
         builder: (context, state) => LoginPage(),
       ),
@@ -37,14 +38,6 @@ class AppRouter {
         name: 'taskForm',
         builder: (context, state) => const TaskFormPage(),
       ),
-      // GoRoute(
-      //   path: '/task/:id',
-      //   name: 'taskDetail',
-      //   builder: (context, state) {
-      //     final String taskId = state.pathParameters['id']!;
-      //     return TaskDetailPage(taskId: taskId);
-      //   },
-      // ),
     ],
   );
 }

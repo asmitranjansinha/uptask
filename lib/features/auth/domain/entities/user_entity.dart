@@ -1,4 +1,3 @@
-// features/auth/domain/entities/user_entity.dart
 class UserEntity {
   final String id;
   final String email;

@@ -12,7 +12,7 @@ void main() async {
   );
 
   // Initialize getIt
-  init();
+  await init();
 
   runApp(const UpTask());
 }
