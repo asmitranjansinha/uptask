@@ -72,7 +72,7 @@ init() async {
 
   // Register Repositories
   sl.registerLazySingleton<TaskRepository>(
-    () => TaskRepositoryImpl(remoteDataSource: sl()),
+    () => TaskRepositoryImpl(remoteDataSource: sl(), authLocalDataSource: sl()),
   );
 
   // Register Data Sources

@@ -97,7 +97,7 @@ class RegisterPage extends StatelessWidget {
                                     Text(
                                       'Get Started Free',
                                       style: GoogleFonts.fredoka(
-                                        fontSize: 30.sp,
+                                        fontSize: 25.sp,
                                         fontWeight: FontWeight.w500,
                                         color: Colors.black,
                                       ),
@@ -105,23 +105,28 @@ class RegisterPage extends StatelessWidget {
                                     Text(
                                       'Enter your details below',
                                       style: GoogleFonts.fredoka(
-                                        fontSize: 16.sp,
+                                        fontSize: 12.sp,
                                         fontWeight: FontWeight.w300,
                                         color: Colors.black,
                                       ),
                                     ),
-                                    60.verticalSpace,
+                                    30.verticalSpace,
                                     AuthField(
-                                      labelText: 'EMAIL ADDRESS',
+                                      labelText: 'Name',
+                                      controller: _nameController,
+                                    ),
+                                    16.verticalSpace,
+                                    AuthField(
+                                      labelText: 'Email Address',
                                       controller: _emailController,
                                     ),
                                     16.verticalSpace,
                                     AuthField(
-                                      labelText: 'PASSWORD',
+                                      labelText: 'Password',
                                       controller: _passwordController,
                                       isPasswordField: true,
                                     ),
-                                    30.verticalSpace,
+                                    20.verticalSpace,
                                     ElevatedButton(
                                       onPressed: () {
                                         context.read<AuthBloc>().add(
