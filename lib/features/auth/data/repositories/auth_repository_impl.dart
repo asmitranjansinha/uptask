@@ -15,6 +15,7 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<UserEntity> login(String email, String password) async {
     final user = await remoteDataSource.login(email, password);
     await localDataSource.saveLoginStatus(true);
+    await localDataSource.saveUserData([user.id, user.email, user.name ?? ""]);
     return user;
   }
 
@@ -23,6 +24,7 @@ class AuthRepositoryImpl implements AuthRepository {
       String email, String password, String name) async {
     final user = await remoteDataSource.register(email, password, name);
     await localDataSource.saveLoginStatus(true);
+    await localDataSource.saveUserData([user.id, user.email, user.name ?? ""]);
     return user;
   }
 
@@ -30,6 +32,7 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<void> logout() async {
     await remoteDataSource.logout();
     await localDataSource.logout();
+    await localDataSource.clearUserData();
   }
 
   @override
