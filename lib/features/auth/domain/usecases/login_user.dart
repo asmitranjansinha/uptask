@@ -1,5 +1,5 @@
 // features/auth/domain/usecases/login_user.dart
-import 'package:uptask/features/auth/domain/entities/user_entitiy.dart';
+import 'package:uptask/features/auth/domain/entities/user_entity.dart';
 import 'package:uptask/features/auth/domain/repositories/auth_repository.dart';
 
 class LoginUser {

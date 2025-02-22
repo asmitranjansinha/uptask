@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:uptask/features/auth/presentation/pages/login_page.dart';
 import 'package:uptask/features/auth/presentation/pages/register_page.dart';
+import 'package:uptask/features/task/presentation/pages/task_form_page.dart';
+import 'package:uptask/features/task/presentation/pages/task_list_page.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -25,16 +27,16 @@ class AppRouter {
         name: 'register',
         builder: (context, state) => RegisterPage(),
       ),
-      // GoRoute(
-      //   path: '/home',
-      //   name: 'home',
-      //   builder: (context, state) => const HomePage(),
-      // ),
-      // GoRoute(
-      //   path: '/task/create',
-      //   name: 'taskCreate',
-      //   builder: (context, state) => const TaskCreatePage(),
-      // ),
+      GoRoute(
+        path: '/tasks/list',
+        name: 'tasksList',
+        builder: (context, state) => TaskListPage(),
+      ),
+      GoRoute(
+        path: '/task/form',
+        name: 'taskForm',
+        builder: (context, state) => const TaskFormPage(),
+      ),
       // GoRoute(
       //   path: '/task/:id',
       //   name: 'taskDetail',

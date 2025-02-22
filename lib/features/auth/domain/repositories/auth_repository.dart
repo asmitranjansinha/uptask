@@ -1,5 +1,5 @@
 // features/auth/domain/repositories/auth_repository.dart
-import 'package:uptask/features/auth/domain/entities/user_entitiy.dart';
+import 'package:uptask/features/auth/domain/entities/user_entity.dart';
 
 abstract class AuthRepository {
   Future<UserEntity> login(String email, String password);
