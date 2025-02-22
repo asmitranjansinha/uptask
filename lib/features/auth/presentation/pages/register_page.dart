@@ -1,4 +1,3 @@
-// features/auth/presentation/pages/register_page.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,7 +8,6 @@ import 'package:uptask/core/service_locator.dart';
 import 'package:uptask/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:uptask/features/auth/presentation/bloc/auth_event.dart';
 import 'package:uptask/features/auth/presentation/bloc/auth_state.dart';
-import 'package:uptask/features/auth/presentation/pages/login_page.dart';
 import 'package:uptask/features/auth/presentation/widgets/auth_field.dart';
 
 class RegisterPage extends StatelessWidget {
