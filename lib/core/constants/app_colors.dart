@@ -7,4 +7,6 @@ class AppColors {
   static const Color buttonText = Colors.white;
   static const Color error = Colors.red;
   static const Color success = Colors.green;
+  static const Color grey = Color(0xFFE0E0E0);
+  static const Color glass = Color(0x33FFFFFF);
 }
