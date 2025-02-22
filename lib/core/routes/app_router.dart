@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:uptask/features/auth/presentation/pages/login_page.dart';
+import 'package:uptask/features/auth/presentation/pages/register_page.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -13,16 +15,16 @@ class AppRouter {
       //   name: 'splash',
       //   builder: (context, state) => const SplashPage(),
       // ),
-      // GoRoute(
-      //   path: '/login',
-      //   name: 'login',
-      //   builder: (context, state) => const LoginPage(),
-      // ),
-      // GoRoute(
-      //   path: '/register',
-      //   name: 'register',
-      //   builder: (context, state) => const RegisterPage(),
-      // ),
+      GoRoute(
+        path: '/',
+        name: 'login',
+        builder: (context, state) => LoginPage(),
+      ),
+      GoRoute(
+        path: '/register',
+        name: 'register',
+        builder: (context, state) => RegisterPage(),
+      ),
       // GoRoute(
       //   path: '/home',
       //   name: 'home',
