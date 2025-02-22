@@ -1,16 +1,45 @@
 # uptask
 
-A new Flutter project.
+A task management app for gig workers that allows users to create tasks and manage them.
 
-## Getting Started
+### Architecture
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```
+📂 lib
+ ┣ 📂 core
+ ┃ ┣ 📂 constants
+ ┃ ┣ 📂 routes
+ ┃ ┣ 📂 theme
+ ┃ ┣ 📜 service_locator.dart
+ ┣ 📂 features
+ ┃ ┣ 📂 task (example)
+ ┃ ┃ ┣ 📂 data
+ ┃ ┃ ┃ ┣ 📂 datasources
+ ┃ ┃ ┃ ┃ ┣ 📜 task_local_datasource.dart
+ ┃ ┃ ┃ ┃ ┣ 📜 task_remote_datasource.dart
+ ┃ ┃ ┃ ┣ 📂 models
+ ┃ ┃ ┃ ┃ ┣ 📜 task_model.dart
+ ┃ ┃ ┃ ┣ 📂 repositories
+ ┃ ┃ ┃ ┃ ┣ 📜 task_repository_impl.dart
+ ┃ ┃ ┣ 📂 domain
+ ┃ ┃ ┃ ┣ 📂 entities
+ ┃ ┃ ┃ ┃ ┣ 📜 task_entity.dart
+ ┃ ┃ ┃ ┣ 📂 repositories
+ ┃ ┃ ┃ ┃ ┣ 📜 task_repository.dart
+ ┃ ┃ ┃ ┣ 📂 usecases
+ ┃ ┃ ┃ ┃ ┣ 📜 create_task.dart
+ ┃ ┃ ┃ ┃ ┣ 📜 update_task.dart
+ ┃ ┃ ┃ ┃ ┣ 📜 delete_task.dart
+ ┃ ┃ ┃ ┃ ┣ 📜 get_tasks.dart
+ ┃ ┃ ┣ 📂 presentation
+ ┃ ┃ ┃ ┣ 📂 bloc
+ ┃ ┃ ┃ ┃ ┣ 📜 task_bloc.dart
+ ┃ ┃ ┃ ┃ ┣ 📜 task_event.dart
+ ┃ ┃ ┃ ┃ ┣ 📜 task_state.dart
+ ┃ ┃ ┃ ┣ 📂 pages
+ ┃ ┃ ┃ ┃ ┣ 📜 task_list_page.dart
+ ┃ ┃ ┃ ┃ ┣ 📜 task_form_page.dart
+ ┃ ┃ ┃ ┣ 📂 widgets
+ ┃ ┃ ┃ ┃ ┣ 📜 task_item.dart
+ ┃ ┃ ┃ ┃ ┣ 📜 task_filter.dart
+```
