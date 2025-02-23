@@ -6,6 +6,7 @@ import 'package:uptask/features/auth/data/datasources/auth_remote_datasource.dar
 import 'package:uptask/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:uptask/features/auth/domain/repositories/auth_repository.dart';
 import 'package:uptask/features/auth/domain/usecases/check_login_status.dart';
+import 'package:uptask/features/auth/domain/usecases/get_user.dart';
 import 'package:uptask/features/auth/domain/usecases/login_user.dart';
 import 'package:uptask/features/auth/domain/usecases/logout_user.dart';
 import 'package:uptask/features/auth/presentation/bloc/auth_bloc.dart';
@@ -31,6 +32,7 @@ init() async {
         registerUser: sl(),
         logoutUser: sl(),
         checkLoginStatus: sl(),
+        getUser: sl(),
       ));
 
   // Register Use Cases
@@ -38,6 +40,7 @@ init() async {
   sl.registerLazySingleton(() => RegisterUser(sl()));
   sl.registerLazySingleton(() => LogoutUser(sl()));
   sl.registerLazySingleton(() => CheckLoginStatus(sl()));
+  sl.registerLazySingleton(() => GetUser(sl()));
 
   // Register Repositories
   sl.registerLazySingleton<AuthRepository>(

@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uptask/features/auth/domain/entities/user_entity.dart';
 import 'package:uptask/features/auth/domain/usecases/check_login_status.dart';
+import 'package:uptask/features/auth/domain/usecases/get_user.dart';
 import 'package:uptask/features/auth/domain/usecases/login_user.dart';
 import '../../domain/usecases/logout_user.dart';
 import '../../domain/usecases/register_user.dart';
@@ -12,12 +13,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final RegisterUser registerUser;
   final CheckLoginStatus checkLoginStatus;
   final LogoutUser logoutUser;
+  final GetUser getUser;
 
   AuthBloc({
     required this.loginUser,
     required this.registerUser,
     required this.checkLoginStatus,
     required this.logoutUser,
+    required this.getUser,
   }) : super(AuthInitial()) {
     // Register event handlers
     on<LoginEvent>(_onLoginEvent);
@@ -70,8 +73,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       final isLoggedIn = await checkLoginStatus();
       if (isLoggedIn) {
-        emit(AuthSuccess(UserEntity(
-            email: "test@example.com", name: "User", id: '8947589')));
+        final user = await getUser();
+        emit(AuthSuccess(user));
       } else {
         emit(AuthInitial());
       }

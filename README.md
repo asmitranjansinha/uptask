@@ -48,5 +48,5 @@ A task management app for gig workers that allows users to create tasks and mana
 
 - [x] implement authentication
 - [ ] create task home page with bottom navigation and link task list and task calendar
-- [ ] add services to create user specific tasks
+- [x] add services to create user specific tasks
 - [ ] add task calendar

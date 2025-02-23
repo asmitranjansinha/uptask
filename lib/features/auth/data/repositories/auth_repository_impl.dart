@@ -1,5 +1,6 @@
 // features/auth/data/repositories/auth_repository_impl.dart
 import 'package:uptask/features/auth/data/datasources/auth_local_datasource.dart';
+import 'package:uptask/features/auth/data/models/user_model.dart';
 import 'package:uptask/features/auth/domain/entities/user_entity.dart';
 import 'package:uptask/features/auth/domain/repositories/auth_repository.dart';
 import 'package:uptask/features/auth/data/datasources/auth_remote_datasource.dart';
@@ -38,5 +39,11 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<bool> isLoggedIn() async {
     return await localDataSource.getLoginStatus();
+  }
+
+  @override
+  Future<UserEntity> getUser() async {
+    final user = await localDataSource.getUserData();
+    return UserModel(id: user[0], email: user[1], name: user[2]);
   }
 }
