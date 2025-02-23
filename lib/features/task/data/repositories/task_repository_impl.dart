@@ -15,19 +15,17 @@ class TaskRepositoryImpl implements TaskRepository {
   });
 
   @override
-  Future<void> createTask(TaskEntity task) async {
+  Future<void> createTask(String title, String description, DateTime dueDate,
+      String priority) async {
     final userData = await authLocalDataSource.getUserData();
     final uid = userData[0];
     await remoteDataSource.createTask(
-        uid,
-        TaskModel(
-          id: task.id,
-          title: task.title,
-          description: task.description,
-          dueDate: task.dueDate,
-          priority: task.priority,
-          isCompleted: task.isCompleted,
-        ));
+      uid,
+      title,
+      description,
+      dueDate,
+      priority,
+    );
   }
 
   @override

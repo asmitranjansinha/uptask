@@ -6,7 +6,8 @@ class CreateTask {
 
   CreateTask(this.repository);
 
-  Future<void> call(TaskEntity task) async {
-    return await repository.createTask(task);
+  Future<void> call(String title, String description, DateTime dueDate,
+      String priority) async {
+    return await repository.createTask(title, description, dueDate, priority);
   }
 }

@@ -1,4 +1,3 @@
-// features/task/data/models/task_model.dart
 import 'package:uptask/features/task/domain/entities/task_entity.dart';
 
 class TaskModel extends TaskEntity {
@@ -31,5 +30,23 @@ class TaskModel extends TaskEntity {
       'priority': priority,
       'isCompleted': isCompleted,
     };
+  }
+
+  TaskModel copyWith({
+    String? id,
+    String? title,
+    String? description,
+    DateTime? dueDate,
+    String? priority,
+    bool? isCompleted,
+  }) {
+    return TaskModel(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      dueDate: dueDate ?? this.dueDate,
+      priority: priority ?? this.priority,
+      isCompleted: isCompleted ?? this.isCompleted,
+    );
   }
 }

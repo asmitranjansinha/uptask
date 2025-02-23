@@ -31,6 +31,7 @@ class LoginPage extends StatelessWidget {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text("success")),
               );
+              context.go('/tasks/list');
             }
           },
           builder: (context, state) {

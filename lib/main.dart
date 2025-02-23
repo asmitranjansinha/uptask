@@ -28,12 +28,8 @@ class UpTask extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (context) => sl<AuthBloc>(),
-        ),
-        BlocProvider(
-          create: (context) => sl<TaskBloc>(),
-        )
+        BlocProvider(create: (context) => sl<AuthBloc>()),
+        BlocProvider(create: (context) => sl<TaskBloc>())
       ],
       child: ScreenUtilInit(
         designSize: const Size(360, 690),

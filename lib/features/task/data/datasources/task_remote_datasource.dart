@@ -1,17 +1,23 @@
-// features/task/data/datasources/task_remote_datasource.dart
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:uptask/features/task/data/models/task_model.dart';
 
 class TaskRemoteDataSource {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<void> createTask(String uid, TaskModel task) async {
-    await _firestore
-        .collection('users')
-        .doc(uid)
-        .collection('tasks')
-        .doc(task.id)
-        .set(task.toJson());
+  Future<void> createTask(String uid, String title, String description,
+      DateTime dueDate, String priority) async {
+    final taskRef =
+        _firestore.collection('users').doc(uid).collection('tasks').doc();
+    final taskWithId = TaskModel(
+      id: taskRef.id,
+      title: title,
+      description: description,
+      dueDate: dueDate,
+      priority: priority,
+      isCompleted: false,
+    );
+
+    await taskRef.set(taskWithId.toJson());
   }
 
   Future<void> updateTask(String uid, TaskModel task) async {

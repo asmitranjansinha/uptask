@@ -18,6 +18,14 @@ class TaskUpdated extends TaskState {}
 
 class TaskDeleted extends TaskState {}
 
+class TaskLoadingWithData extends TaskState {
+  final List<TaskEntity> tasks;
+  const TaskLoadingWithData(this.tasks);
+
+  @override
+  List<Object> get props => [tasks];
+}
+
 class TaskLoaded extends TaskState {
   final List<TaskEntity> tasks;
 

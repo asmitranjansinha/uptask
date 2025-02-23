@@ -9,12 +9,20 @@ abstract class TaskEvent extends Equatable {
 }
 
 class CreateTaskEvent extends TaskEvent {
-  final TaskEntity task;
+  final String title;
+  final String description;
+  final DateTime dueDate;
+  final String priority;
 
-  const CreateTaskEvent(this.task);
+  const CreateTaskEvent(
+    this.title,
+    this.description,
+    this.dueDate,
+    this.priority,
+  );
 
   @override
-  List<Object> get props => [task];
+  List<Object> get props => [title, description, dueDate, priority];
 }
 
 class UpdateTaskEvent extends TaskEvent {

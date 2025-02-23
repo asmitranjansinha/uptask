@@ -23,14 +23,29 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     on<UpdateTaskEvent>(_onUpdateTaskEvent);
     on<DeleteTaskEvent>(_onDeleteTaskEvent);
     on<GetTasksEvent>(_onGetTasksEvent);
+
+    add(GetTasksEvent());
   }
 
   Future<void> _onCreateTaskEvent(
       CreateTaskEvent event, Emitter<TaskState> emit) async {
-    emit(TaskLoading());
+    final currentState = state; // Capture current state
+
+    if (currentState is TaskLoaded) {
+      emit(TaskLoadingWithData(currentState.tasks)); // Preserve existing tasks
+    } else {
+      emit(TaskLoading()); // Fallback if no tasks exist
+    }
+
     try {
-      await createTask(event.task);
-      emit(TaskCreated());
+      await createTask(
+        event.title,
+        event.description,
+        event.dueDate,
+        event.priority,
+      );
+      final tasks = await getTasks();
+      emit(TaskLoaded(tasks)); // Emit updated list
     } catch (e) {
       emit(TaskFailure(e.toString()));
     }
