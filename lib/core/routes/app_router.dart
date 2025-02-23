@@ -30,19 +30,9 @@ class AppRouter {
         builder: (context, state) => RegisterPage(),
       ),
       GoRoute(
-        path: '/tasks/home',
-        name: 'taskHome',
-        builder: (context, state) => const TaskHomePage(),
-      ),
-      GoRoute(
         path: '/tasks/list',
         name: 'tasksList',
         builder: (context, state) => TaskListPage(),
-      ),
-      GoRoute(
-        path: '/task/form',
-        name: 'taskForm',
-        builder: (context, state) => const TaskFormPage(),
       ),
     ],
   );
