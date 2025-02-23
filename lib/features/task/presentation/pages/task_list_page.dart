@@ -103,61 +103,45 @@ class _TaskListPageState extends State<TaskListPage> {
                         final groupedTasks = _groupTasksByDate(filteredTasks);
 
                         return Column(
-                          children: _getSortedKeys(groupedTasks).map((key) {
-                            return Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: 4.sp, horizontal: 16.0),
-                                  child: Text(
-                                    key,
-                                    style: GoogleFonts.fredoka(
-                                      fontSize: 18.sp,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ),
-                                ...groupedTasks[key]!.map(
-                                  (task) => TaskItem(task: task),
-                                ),
-                              ],
-                            );
-                          }).toList(),
+                          children: [
+                            if (state is! TaskLoaded &&
+                                (state is TaskLoaded ||
+                                    state is TaskLoadingWithData))
+                              LinearProgressIndicator(),
+                            if (state is TaskLoaded && tasks.isNotEmpty)
+                              Column(
+                                children:
+                                    _getSortedKeys(groupedTasks).map((key) {
+                                  return Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: 4.sp, horizontal: 16.0),
+                                        child: Text(
+                                          key,
+                                          style: GoogleFonts.fredoka(
+                                            fontSize: 18.sp,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ),
+                                      ...groupedTasks[key]!.map(
+                                        (task) => TaskItem(task: task),
+                                      ),
+                                    ],
+                                  );
+                                }).toList(),
+                              ),
+                            if (state is TaskLoaded && tasks.isEmpty)
+                              _emptyTaskList(),
+                          ],
                         );
                       } else if (state is TaskFailure) {
                         return Center(child: Text(state.error));
                       }
-                      return Center(
-                        child: InkWell(
-                          onTap: () => _showTaskCreateBottomSheet(context),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Start Creating Tasks',
-                                style: GoogleFonts.fredoka(
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w400,
-                                  fontStyle: FontStyle.italic,
-                                ),
-                              ),
-                              10.horizontalSpace,
-                              Container(
-                                decoration: const BoxDecoration(
-                                  color: Color.fromARGB(255, 143, 124, 237),
-                                  shape: BoxShape.circle,
-                                ),
-                                child: const Icon(
-                                  Icons.add,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
+                      return _emptyTaskList();
                     },
                   );
                 },
@@ -181,6 +165,39 @@ class _TaskListPageState extends State<TaskListPage> {
           }
           return SizedBox.shrink();
         },
+      ),
+    );
+  }
+
+  Widget _emptyTaskList() {
+    return Center(
+      child: InkWell(
+        onTap: () => _showTaskCreateBottomSheet(context),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Start Creating Tasks',
+              style: GoogleFonts.fredoka(
+                fontSize: 14.sp,
+                fontWeight: FontWeight.w400,
+                fontStyle: FontStyle.italic,
+              ),
+            ),
+            10.horizontalSpace,
+            Container(
+              decoration: const BoxDecoration(
+                color: Color.fromARGB(255, 143, 124, 237),
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

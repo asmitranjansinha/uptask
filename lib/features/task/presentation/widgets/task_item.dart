@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:swipe_to/swipe_to.dart';
 import 'package:uptask/features/task/domain/entities/task_entity.dart';
 import 'package:uptask/features/task/presentation/bloc/task_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,141 +17,159 @@ class TaskItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => _showTaskDetails(context),
-      child: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: 15.w,
-          vertical: 10.h,
-        ),
-        child: task.isCompleted
-            ? _completedTaskTile()
-            : Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.black,
-                    width: 1,
-                  ),
-                  borderRadius: BorderRadius.circular(15.sp),
-                ),
-                padding: EdgeInsets.symmetric(
-                  horizontal: 15.w,
-                  vertical: 10.h,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          task.title,
-                          style: GoogleFonts.fredoka(
-                            fontSize: 20.sp,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        Icon(CupertinoIcons.ellipsis),
-                      ],
-                    ),
-                    Text(
-                      task.description,
-                      style: GoogleFonts.fredoka(
-                        fontSize: 15.sp,
-                        color: Colors.grey.shade700,
-                      ),
-                    ),
-                    10.verticalSpace,
-                    Container(
-                      decoration: BoxDecoration(
-                        color: task.priority == 'Low'
-                            ? Colors.green
-                            : task.priority == 'Medium'
-                                ? Colors.orangeAccent
-                                : Colors.red,
-                        borderRadius: BorderRadius.circular(35.sp),
-                      ),
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 10.sp,
-                        vertical: 5.sp,
-                      ),
-                      child: Text(
-                        task.priority,
-                        style: GoogleFonts.fredoka(
-                          fontSize: 12.sp,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-      ),
-    );
-  }
-
-  _completedTaskTile() {
-    return Container(
-      width: double.infinity,
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: Colors.grey,
-          width: 1,
-        ),
-        borderRadius: BorderRadius.circular(15.sp),
-      ),
+    return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: 15.w,
         vertical: 10.h,
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: task.isCompleted
+          ? _completedTaskTile(context)
+          : InkWell(
+              onTap: () => _showTaskDetails(context),
+              child: SwipeTo(
+                iconOnLeftSwipe: CupertinoIcons.delete_solid,
+                iconColor: Colors.red,
+                onLeftSwipe: (details) {
+                  BlocProvider.of<TaskBloc>(context)
+                      .add(DeleteTaskEvent(task.id));
+                },
+                child: Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.black,
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(15.sp),
+                  ),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 15.w,
+                    vertical: 10.h,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            task.title,
+                            style: GoogleFonts.fredoka(
+                              fontSize: 20.sp,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          Icon(CupertinoIcons.ellipsis),
+                        ],
+                      ),
+                      Text(
+                        task.description,
+                        style: GoogleFonts.fredoka(
+                          fontSize: 15.sp,
+                          color: Colors.grey.shade700,
+                        ),
+                      ),
+                      10.verticalSpace,
+                      Container(
+                        decoration: BoxDecoration(
+                          color: task.priority == 'Low'
+                              ? Colors.green
+                              : task.priority == 'Medium'
+                                  ? Colors.orangeAccent
+                                  : Colors.red,
+                          borderRadius: BorderRadius.circular(35.sp),
+                        ),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 10.sp,
+                          vertical: 5.sp,
+                        ),
+                        child: Text(
+                          task.priority,
+                          style: GoogleFonts.fredoka(
+                            fontSize: 12.sp,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+    );
+  }
+
+  _completedTaskTile(context) {
+    return InkWell(
+      onTap: () => _showTaskDetails(context),
+      child: SwipeTo(
+        iconOnLeftSwipe: CupertinoIcons.delete_solid,
+        iconColor: Colors.red,
+        onLeftSwipe: (details) {
+          BlocProvider.of<TaskBloc>(context).add(DeleteTaskEvent(task.id));
+        },
+        child: Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: Colors.grey,
+              width: 1,
+            ),
+            borderRadius: BorderRadius.circular(15.sp),
+          ),
+          padding: EdgeInsets.symmetric(
+            horizontal: 15.w,
+            vertical: 10.h,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Icon(
-                    CupertinoIcons.check_mark_circled,
-                    color: Colors.grey,
+                  Row(
+                    children: [
+                      Icon(
+                        CupertinoIcons.check_mark_circled,
+                        color: Colors.grey,
+                      ),
+                      10.horizontalSpace,
+                      Text(
+                        task.title,
+                        style: GoogleFonts.fredoka(
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ],
                   ),
-                  10.horizontalSpace,
-                  Text(
-                    task.title,
-                    style: GoogleFonts.fredoka(
-                      fontSize: 20.sp,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.grey,
+                  Container(
+                    decoration: BoxDecoration(
+                      color: task.priority == 'Low'
+                          ? Colors.green.shade200
+                          : task.priority == 'Medium'
+                              ? Colors.orangeAccent.shade100
+                              : Colors.red.shade200,
+                      borderRadius: BorderRadius.circular(35.sp),
+                    ),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 10.sp,
+                      vertical: 5.sp,
+                    ),
+                    child: Text(
+                      task.priority,
+                      style: GoogleFonts.fredoka(
+                        fontSize: 12.sp,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ],
               ),
-              Container(
-                decoration: BoxDecoration(
-                  color: task.priority == 'Low'
-                      ? Colors.green.shade200
-                      : task.priority == 'Medium'
-                          ? Colors.orangeAccent.shade100
-                          : Colors.red.shade200,
-                  borderRadius: BorderRadius.circular(35.sp),
-                ),
-                padding: EdgeInsets.symmetric(
-                  horizontal: 10.sp,
-                  vertical: 5.sp,
-                ),
-                child: Text(
-                  task.priority,
-                  style: GoogleFonts.fredoka(
-                    fontSize: 12.sp,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
             ],
           ),
-        ],
+        ),
       ),
     );
   }
