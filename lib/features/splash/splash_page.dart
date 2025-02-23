@@ -20,7 +20,7 @@ class SplashPage extends StatelessWidget {
           if (state is AuthSuccess) {
             Future.delayed(const Duration(seconds: 3), () {
               if (context.mounted) {
-                context.go('/login');
+                context.go('/tasks/home');
               }
             });
           } else if (state is AuthInitial) {

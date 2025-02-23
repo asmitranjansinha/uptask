@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:uptask/features/auth/domain/entities/user_entity.dart';
 import 'package:uptask/features/auth/domain/usecases/check_login_status.dart';
 import 'package:uptask/features/auth/domain/usecases/get_user.dart';
 import 'package:uptask/features/auth/domain/usecases/login_user.dart';
