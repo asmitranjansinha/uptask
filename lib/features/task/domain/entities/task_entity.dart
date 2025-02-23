@@ -14,4 +14,23 @@ class TaskEntity {
     required this.priority,
     this.isCompleted = false,
   });
+
+  // Add the copyWith method
+  TaskEntity copyWith({
+    String? id,
+    String? title,
+    String? description,
+    DateTime? dueDate,
+    String? priority,
+    bool? isCompleted,
+  }) {
+    return TaskEntity(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      dueDate: dueDate ?? this.dueDate,
+      priority: priority ?? this.priority,
+      isCompleted: isCompleted ?? this.isCompleted,
+    );
+  }
 }

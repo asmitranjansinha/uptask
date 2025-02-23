@@ -192,7 +192,7 @@ class _TaskListPageState extends State<TaskListPage> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           _buildFilterTile('All'),
-          _buildFilterTile('Complete'),
+          _buildFilterTile('Completed'),
           _buildFilterTile('Low'),
           _buildFilterTile('Medium'),
           _buildFilterTile('High'),
@@ -205,7 +205,7 @@ class _TaskListPageState extends State<TaskListPage> {
     switch (_selectedFilter) {
       case 'All':
         return tasks;
-      case 'Complete':
+      case 'Completed':
         return tasks.where((task) => task.isCompleted).toList();
       case 'Low':
         return tasks.where((task) => task.priority == 'Low').toList();

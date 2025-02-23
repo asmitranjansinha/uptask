@@ -53,10 +53,17 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
 
   Future<void> _onUpdateTaskEvent(
       UpdateTaskEvent event, Emitter<TaskState> emit) async {
-    emit(TaskLoading());
+    final currentState = state; // Capture current state
+
+    if (currentState is TaskLoaded) {
+      emit(TaskLoadingWithData(currentState.tasks)); // Preserve existing tasks
+    } else {
+      emit(TaskLoading()); // Fallback if no tasks exist
+    }
     try {
       await updateTask(event.task);
-      emit(TaskUpdated());
+      final tasks = await getTasks();
+      emit(TaskLoaded(tasks)); // Emit updated list
     } catch (e) {
       emit(TaskFailure(e.toString()));
     }
@@ -64,10 +71,17 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
 
   Future<void> _onDeleteTaskEvent(
       DeleteTaskEvent event, Emitter<TaskState> emit) async {
-    emit(TaskLoading());
+    final currentState = state; // Capture current state
+
+    if (currentState is TaskLoaded) {
+      emit(TaskLoadingWithData(currentState.tasks)); // Preserve existing tasks
+    } else {
+      emit(TaskLoading()); // Fallback if no tasks exist
+    }
     try {
       await deleteTask(event.taskId);
-      emit(TaskDeleted());
+      final tasks = await getTasks();
+      emit(TaskLoaded(tasks)); // Emit updated list
     } catch (e) {
       emit(TaskFailure(e.toString()));
     }
