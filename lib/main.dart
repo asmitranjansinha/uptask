@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,7 +34,8 @@ class UpTask extends StatelessWidget {
         BlocProvider(create: (context) => sl<TaskBloc>())
       ],
       child: ScreenUtilInit(
-        designSize: const Size(360, 690),
+        designSize:
+            Platform.isAndroid ? const Size(350, 900) : const Size(360, 690),
         builder: (context, child) {
           return MaterialApp.router(
             routerConfig: AppRouter.router,

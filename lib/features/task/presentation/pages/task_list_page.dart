@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -62,18 +64,19 @@ class _TaskListPageState extends State<TaskListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.only(top: _appBarCollapsed ? 10.sp : 30.sp),
+        padding: EdgeInsets.only(top: _appBarCollapsed ? 10.sp : 40.sp),
         child: CustomScrollView(
           controller: _scrollController,
           slivers: [
             SliverAppBar(
               backgroundColor: Colors.white,
-              expandedHeight: 120.h,
-              collapsedHeight: 70.h,
+              expandedHeight: Platform.isAndroid ? 80.h : 120.h,
+              collapsedHeight: Platform.isAndroid ? 58.h : 70.h,
               floating: false,
               surfaceTintColor: Colors.white,
               pinned: true,
               flexibleSpace: FlexibleSpaceBar(
+                centerTitle: true,
                 title: _buildFilterOptions(),
                 background: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
