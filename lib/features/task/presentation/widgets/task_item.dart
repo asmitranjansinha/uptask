@@ -139,12 +139,17 @@ class TaskItem extends StatelessWidget {
                         color: Colors.grey,
                       ),
                       10.horizontalSpace,
-                      Text(
-                        task.title,
-                        style: GoogleFonts.fredoka(
-                          fontSize: 20.sp,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.grey,
+                      SizedBox(
+                        width: 150.w,
+                        child: Text(
+                          task.title,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: GoogleFonts.fredoka(
+                            fontSize: 20.sp,
+                            color: Colors.grey,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
                     ],
