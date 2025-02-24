@@ -43,10 +43,3 @@ A task management app for gig workers that allows users to create tasks and mana
  ┃ ┃ ┃ ┃ ┣ 📜 task_item.dart
  ┃ ┃ ┃ ┃ ┣ 📜 task_filter.dart
 ```
-
-### Todo
-
-- [x] implement authentication
-- [ ] create task home page with bottom navigation and link task list and task calendar
-- [x] add services to create user specific tasks
-- [ ] add task calendar
