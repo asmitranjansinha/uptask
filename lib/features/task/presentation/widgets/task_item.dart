@@ -50,11 +50,16 @@ class TaskItem extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            task.title,
-                            style: GoogleFonts.fredoka(
-                              fontSize: 20.sp,
-                              fontWeight: FontWeight.w500,
+                          SizedBox(
+                            width: 250.w,
+                            child: Text(
+                              task.title,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: GoogleFonts.fredoka(
+                                fontSize: 20.sp,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                           ),
                           Icon(CupertinoIcons.ellipsis),
@@ -62,6 +67,8 @@ class TaskItem extends StatelessWidget {
                       ),
                       Text(
                         task.description,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                         style: GoogleFonts.fredoka(
                           fontSize: 15.sp,
                           color: Colors.grey.shade700,
