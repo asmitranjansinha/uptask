@@ -18,7 +18,10 @@ class TaskListPage extends StatefulWidget {
 }
 
 class _TaskListPageState extends State<TaskListPage> {
+  ScrollController _scrollController = ScrollController();
   String _selectedFilter = 'All';
+
+  bool _appBarCollapsed = false;
 
   void _selectFilter(String filter) {
     setState(() {
@@ -37,16 +40,36 @@ class _TaskListPageState extends State<TaskListPage> {
     );
   }
 
+  bool get _isAppBarExpanded {
+    return _scrollController.hasClients &&
+        _scrollController.offset > (120.h - kToolbarHeight);
+  }
+
+  @override
+  void initState() {
+    _scrollController = ScrollController()
+      ..addListener(() => _isAppBarExpanded
+          ? setState(() {
+              _appBarCollapsed = true;
+            })
+          : setState(() {
+              _appBarCollapsed = false;
+            }));
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.only(top: 30.sp),
+        padding: EdgeInsets.only(top: _appBarCollapsed ? 10.sp : 30.sp),
         child: CustomScrollView(
+          controller: _scrollController,
           slivers: [
             SliverAppBar(
               backgroundColor: Colors.white,
               expandedHeight: 120.h,
+              collapsedHeight: 70.h,
               floating: false,
               surfaceTintColor: Colors.white,
               pinned: true,
@@ -201,25 +224,37 @@ class _TaskListPageState extends State<TaskListPage> {
   }
 
   Widget _buildFilterOptions() {
-    return Padding(
-      padding: const EdgeInsets.only(
-        left: 6.0,
-      ),
-      child: SizedBox(
-        height: 50.h,
-        child: ListView(
-          shrinkWrap: true,
-          scrollDirection: Axis.horizontal,
-          children: [
-            _buildFilterTile('All'),
-            _buildFilterTile('Completed'),
-            _buildFilterTile('Low'),
-            _buildFilterTile('Medium'),
-            _buildFilterTile('High'),
-          ],
-        ),
-      ),
-    );
+    return BlocBuilder<TaskBloc, TaskState>(builder: (context, state) {
+      if (state is TaskLoaded || state is TaskLoadingWithData) {
+        final tasks = state is TaskLoaded
+            ? state.tasks
+            : (state as TaskLoadingWithData).tasks;
+        return Padding(
+          padding: const EdgeInsets.only(
+            left: 6.0,
+          ),
+          child: SizedBox(
+            height: _appBarCollapsed ? 60.h : 50.h,
+            child: ListView(
+              shrinkWrap: true,
+              scrollDirection: Axis.horizontal,
+              children: [
+                _buildFilterTile('All', tasks.length),
+                _buildFilterTile('Completed',
+                    tasks.where((task) => task.isCompleted).length),
+                _buildFilterTile('Low',
+                    tasks.where((task) => task.priority == 'Low').length),
+                _buildFilterTile('Medium',
+                    tasks.where((task) => task.priority == 'Medium').length),
+                _buildFilterTile('High',
+                    tasks.where((task) => task.priority == 'High').length),
+              ],
+            ),
+          ),
+        );
+      }
+      return SizedBox.shrink();
+    });
   }
 
   List<TaskEntity> _filterTasks(List<TaskEntity> tasks) {
@@ -284,7 +319,7 @@ class _TaskListPageState extends State<TaskListPage> {
     return keys;
   }
 
-  Widget _buildFilterTile(String filter) {
+  Widget _buildFilterTile(String filter, int? tasks) {
     bool isSelected = _selectedFilter == filter;
 
     return Padding(
@@ -318,6 +353,32 @@ class _TaskListPageState extends State<TaskListPage> {
                   color: isSelected ? Colors.white : Colors.black,
                 ),
               ),
+              if (tasks != null)
+                _appBarCollapsed
+                    ? Row(
+                        children: [
+                          10.horizontalSpace,
+                          Container(
+                            width: 30.w,
+                            decoration: BoxDecoration(
+                              color: isSelected
+                                  ? Colors.green
+                                  : Colors.grey.shade300,
+                              borderRadius: BorderRadius.circular(15.sp),
+                            ),
+                            alignment: Alignment.center,
+                            child: Text(
+                              tasks.toString(),
+                              style: GoogleFonts.fredoka(
+                                fontSize: 10.sp,
+                                fontWeight: FontWeight.w300,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
+                    : SizedBox.shrink(),
             ],
           ),
         ),
