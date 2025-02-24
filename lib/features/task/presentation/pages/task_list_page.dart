@@ -46,11 +46,12 @@ class _TaskListPageState extends State<TaskListPage> {
           slivers: [
             SliverAppBar(
               backgroundColor: Colors.white,
-              expandedHeight: 100.h,
+              expandedHeight: 120.h,
               floating: false,
               surfaceTintColor: Colors.white,
               pinned: true,
               flexibleSpace: FlexibleSpaceBar(
+                title: _buildFilterOptions(),
                 background: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -84,10 +85,6 @@ class _TaskListPageState extends State<TaskListPage> {
                   ],
                 ),
               ),
-              bottom: PreferredSize(
-                preferredSize: Size.fromHeight(15.h),
-                child: _buildFilterOptions(),
-              ),
             ),
             SliverList(
               delegate: SliverChildBuilderDelegate(
@@ -108,7 +105,8 @@ class _TaskListPageState extends State<TaskListPage> {
                                 (state is TaskLoaded ||
                                     state is TaskLoadingWithData))
                               LinearProgressIndicator(),
-                            if (state is TaskLoaded && tasks.isNotEmpty)
+                            if (state is TaskLoaded && tasks.isNotEmpty ||
+                                state is TaskLoadingWithData)
                               Column(
                                 children:
                                     _getSortedKeys(groupedTasks).map((key) {
@@ -204,16 +202,22 @@ class _TaskListPageState extends State<TaskListPage> {
 
   Widget _buildFilterOptions() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          _buildFilterTile('All'),
-          _buildFilterTile('Completed'),
-          _buildFilterTile('Low'),
-          _buildFilterTile('Medium'),
-          _buildFilterTile('High'),
-        ],
+      padding: const EdgeInsets.only(
+        left: 6.0,
+      ),
+      child: SizedBox(
+        height: 50.h,
+        child: ListView(
+          shrinkWrap: true,
+          scrollDirection: Axis.horizontal,
+          children: [
+            _buildFilterTile('All'),
+            _buildFilterTile('Completed'),
+            _buildFilterTile('Low'),
+            _buildFilterTile('Medium'),
+            _buildFilterTile('High'),
+          ],
+        ),
       ),
     );
   }
@@ -296,6 +300,7 @@ class _TaskListPageState extends State<TaskListPage> {
             ),
             borderRadius: BorderRadius.circular(35.sp),
           ),
+          margin: EdgeInsets.symmetric(horizontal: 2.sp),
           padding: EdgeInsets.symmetric(
             horizontal: 10.sp,
             vertical: 5.sp,
